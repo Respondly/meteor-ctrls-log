@@ -1,0 +1,12 @@
+{
+  "name": "ctrls-log",
+  "description": "",
+  "homepage": "",
+  "author": "",
+  "version": "0.0.1",
+  "git": "",
+  "packages": {
+    "sugar": {},
+    "munit": {}
+  }
+}

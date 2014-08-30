@@ -1,0 +1,29 @@
+@import 'core.import'
+
+
+.c-json
+  font-family Monaco, Menlo, Consolas, "Courier New", monospace
+  font-size 12px
+  box-sizing border-box
+  li
+    padding-bottom 4px
+    > ul
+      margin-left 20px
+      margin-top 5px
+
+  .c-key
+    color #890193
+
+  .c-value
+    color darken(white, 75%)
+
+    &.c-string
+      color #C61604
+
+    &.c-number, &.c-bool
+      color #1900D3
+
+    &.c-null, &.c-undefined, &.c-excluded, &.c-circular
+      color darken(white, 30%)
+
+

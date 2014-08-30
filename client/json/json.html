@@ -1,0 +1,20 @@
+<template name='c-json'>
+  <ul class='c-json unstyled'>
+    {{#each props}}
+      <li>
+        <span class='c-key'>{{ key }}</span>:
+        {{#if isObject}}
+          {{> ctrl type='c-json'
+                value=value
+                parentKey=key
+                showFuncs=showFuncs
+                invokeFuncs=invokeFuncs
+                exclude=exclude
+          }}
+        {{else}}
+          <span class='c-value {{ valueCss }}'>{{ value }}</span>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+</template>
