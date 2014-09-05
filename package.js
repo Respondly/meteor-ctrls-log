@@ -10,8 +10,8 @@ Package.on_use(function (api) {
   api.use(['css-stylus', 'ctrl', 'util']);
 
   // Generated with: github.com/philcockfield/meteor-package-paths
-  api.add_files('shared/ns.js', ['client', 'server']);
   api.add_files('client/json/json.html', 'client');
+  api.add_files('client/ns.js', 'client');
   api.add_files('client/json/json.coffee', 'client');
   api.add_files('client/json/json.styl', 'client');
 
