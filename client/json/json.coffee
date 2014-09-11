@@ -65,10 +65,11 @@ Ctrl.define
 
 
           typeName = (value) ->
-            return 'string' if Object.isString(value)
-            return 'number' if Object.isNumber(value)
+            return 'string'  if Object.isString(value)
+            return 'number'  if Object.isNumber(value)
             return 'boolean' if Object.isBoolean(value)
-            return 'object' if Util.isObject(value)
+            return 'date'    if Object.isDate(value)
+            return 'object'  if Util.isObject(value)
             'unknown-type'
 
 
@@ -91,6 +92,10 @@ Ctrl.define
 
                   if isNumber = Object.isNumber(value)
                     valueCss += ' c-number'
+
+                  if isDate = Object.isDate(value)
+                    valueCss += ' c-date'
+                    value = "<#{ value.toString() }>"
 
                   if isNull = value is null
                     valueCss += ' c-null'

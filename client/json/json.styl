@@ -2,6 +2,10 @@
 
 
 .c-json
+  BLUE     = #1900D3
+  DARK_RED = #C61604
+  PURPLE   = #890193
+
   font-family Monaco, Menlo, Consolas, "Courier New", monospace
   font-size 12px
   box-sizing border-box
@@ -12,16 +16,16 @@
       margin-top 5px
 
   .c-key
-    color #890193
+    color PURPLE
 
   .c-value
     color darken(white, 75%)
 
     &.c-string
-      color #C61604
+      color DARK_RED
 
-    &.c-number, &.c-bool
-      color #1900D3
+    &.c-number, &.c-bool, &.c-date
+      color BLUE
 
     &.c-null, &.c-undefined, &.c-excluded, &.c-circular
       color darken(white, 30%)
