@@ -2,20 +2,20 @@
 UI controls for visually logging system state.
 
 
-# Installation
+## Installation
 When running for the first time:
 
     mrt update
     package update
 
 
-# Run Tests
+## Run Tests
 
     mrt test-packages ctrls-log -p 1234
 
 
 
-# License (MIT)
+## License (MIT)
 
 Copyright © 2014, **Respondly**
 
