@@ -1,10 +1,13 @@
 Ctrl.define
   'c-log':
-    init: ->
-    ready: ->
-    destroyed: ->
-    model: ->
     api:
+      ###
+      Clears the log.
+      ###
+      clear: ->
+        for child in Object.clone(@children)
+          child.dispose()
+
 
 
       ###
@@ -38,16 +41,9 @@ Ctrl.define
       ###
 
       logJson: (value, options = {}) ->
-        console.log 'logJson', value, options
-
         args =
           value: value
           options: options
-
-
         ctrl = @appendCtrl 'c-json', @el(), args
 
 
-
-    helpers: {}
-    events: {}
