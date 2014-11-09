@@ -39,11 +39,45 @@ Ctrl.define
                 - exclude:      The key name(s) to exclude from the output.
                                 String or Array of strings.
       ###
-
       logJson: (value, options = {}) ->
         args =
           value: value
           options: options
         ctrl = @appendCtrl 'c-json', @el(), args
+
+        ctrl.onReady => @api.scrollToBottom()
+
+        @ctrl
+
+
+
+      ###
+      Scrolls the log to the bottom.
+      @param options
+                - duration:   The animation duration (in seconds).
+
+      ###
+      scrollToBottom: (options = {}, callback) ->
+        if Object.isFunction(options)
+          callback = options
+          options = {}
+        duration = options.duration ? 0.2
+        el = @el()
+        elParent = @helpers.scrollParent()
+        scrollTo = el.outerHeight() - elParent.height()
+        scrollTo = 0 if scrollTo < 0
+        elParent.animate { scrollTop:scrollTo }, duration.seconds(), -> callback?()
+
+
+
+
+    helpers:
+      scrollParent: ->
+        if not @_scrollParent
+          el = @el().scrollParentY()
+          el ?= $('body')
+          @_scrollParent = el
+        @_scrollParent
+
 
 
