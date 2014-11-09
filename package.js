@@ -11,9 +11,12 @@ Package.on_use(function (api) {
 
   // Generated with: github.com/philcockfield/meteor-package-paths
   api.add_files('client/json/json.html', 'client');
+  api.add_files('client/log/log.html', 'client');
   api.add_files('client/ns.js', 'client');
   api.add_files('client/json/json.coffee', 'client');
   api.add_files('client/json/json.styl', 'client');
+  api.add_files('client/log/log.coffee', 'client');
+  api.add_files('client/log/log.styl', 'client');
 
 });
 
