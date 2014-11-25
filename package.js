@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'respondly:ctrls-log'
+  name: 'respondly:ctrls-log',
   summary: 'UI controls for visually logging system state.',
   version: '0.0.1',
   git: 'https://github.com/Respondly/meteor-ctrls-log.git'
