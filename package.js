@@ -1,13 +1,16 @@
 Package.describe({
-  summary: 'UI controls for visually logging system state.'
+  name: 'respondly:ctrls-log'
+  summary: 'UI controls for visually logging system state.',
+  version: '0.0.1',
+  git: 'https://github.com/Respondly/meteor-ctrls-log.git'
 });
 
 
 
 Package.on_use(function (api) {
   api.use(['coffeescript', 'http']);
-  api.use(['templating'], 'client');
-  api.use(['css-stylus', 'ctrl', 'util']);
+  api.use(['templating', 'ui', 'spacebars'], 'client');
+  api.use(['respondly:css-stylus', 'respondly:ctrl', 'respondly:util']);
 
   // Generated with: github.com/philcockfield/meteor-package-paths
   api.add_files('client/json/json.html', 'client');
@@ -21,12 +24,3 @@ Package.on_use(function (api) {
 });
 
 
-
-Package.on_test(function (api) {
-  api.use(['munit', 'coffeescript', 'chai']);
-  api.use('ctrls-log');
-
-  // Generated with: github.com/philcockfield/meteor-package-paths
-  api.add_files('tests/shared/_init.coffee', ['client', 'server']);
-
-});
