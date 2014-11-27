@@ -1,7 +1,8 @@
 
 
 ###
-Provides a handle to a log item.
+Provides a read/write handle to a log item.
+This allows a log item to be updated after it has been initially added.
 ###
 LogHandle = stampit().enclose ->
   ctrl = null

@@ -64,69 +64,23 @@ Ctrl.define
                 "function (#{ params })"
 
 
-          typeName = (value) ->
-            return 'string'  if Object.isString(value)
-            return 'number'  if Object.isNumber(value)
-            return 'boolean' if Object.isBoolean(value)
-            return 'date'    if Object.isDate(value)
-            return 'object'  if Util.isObject(value)
-            'unknown-type'
-
-
           process = (key, value) =>
             isExcluded = exclude.any (item) -> item is key
-            valueCss = ''
-
-            formatValue = (value) ->
-                  if isString = Object.isString(value)
-                    valueCss += ' c-string'
-                    value = "\"#{ value }\""
-
-                  if isBoolean = Object.isBoolean(value)
-                    valueCss += ' c-bool'
-                    value = value.toString()
-
-                  if isArray = Object.isArray(value)
-                    valueCss += ' c-array'
-                    value = "Array[#{ value.length }]"
-
-                  if isNumber = Object.isNumber(value)
-                    valueCss += ' c-number'
-
-                  if isDate = Object.isDate(value)
-                    valueCss += ' c-date'
-                    value = "<#{ value.toString() }>"
-
-                  if isNull = value is null
-                    valueCss += ' c-null'
-                    value = "null"
-
-                  if isUndefined = value is undefined
-                    valueCss += ' c-undefined'
-                    value = "undefined"
-
-                  if isExcluded and value?
-                    valueCss += ' c-excluded'
-                    value = "<#{ typeName(value) }>"
-
-                  value
-
-            value = formatValue(value)
+            { value, css } = PKG.formatValue(value, isExcluded:isExcluded)
 
             if isFunction = Object.isFunction(value)
               return unless showFuncs
-              valueCss += ' c-func'
+              css += ' c-func'
               if invokeFuncs
                 value = obj[key]()
                 value = formatValue(value)
               else
                 value = funcToString(value)
 
-
             if isObject = Util.isObject(value)
               isCircular = circular.any (item) -> item.path is fullPath
               if isCircular
-                valueCss += ' c-circular'
+                css += ' c-circular'
                 value = '<circular>'
                 isObject = false
               else
@@ -137,7 +91,7 @@ Ctrl.define
             result.push
               key:            key
               value:          value
-              valueCss:       valueCss
+              valueCss:       css
               isObject:       isObject
               showFuncs:      showFuncs
               invokeFuncs:    invokeFuncs

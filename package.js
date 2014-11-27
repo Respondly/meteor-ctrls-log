@@ -22,6 +22,7 @@ Package.onUse(function (api) {
   api.addFiles('client/log/log.coffee', 'client');
   api.addFiles('client/log/log.styl', 'client');
   api.addFiles('client/log-handle.coffee', 'client');
+  api.addFiles('client/util.coffee', 'client');
 
 });
 
