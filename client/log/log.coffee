@@ -2,24 +2,35 @@ Ctrl.define
   'c-log':
     api:
       ###
+      REACTIVE: The total number of items within the log.
+      ###
+      count: (value) -> @prop 'count', value, default:0
+
+
+      ###
       Clears the log.
       ###
       clear: ->
         for child in Object.clone(@children)
           child.dispose()
 
+        @api.count(0)
+
 
 
       ###
       The general purpose log method that infers the way to
       log the given value based on it's type.
-      @param value
+      @param value.
+      @param options
+      @returns a [Log] handle.
       ###
       log: (value, options  = {}) ->
+        increment = => @api.count(@api.count() + 1)
 
         if Util.isObject(value) and not Object.isDate(value)
-          @api.logJson(value, options)
-          return
+          increment()
+          return @api.logJson(value, options)
 
         # TODO
         value = '<null>' if value is null
@@ -38,16 +49,18 @@ Ctrl.define
                 - invokeFuncs:  Flag indicating whether functions should be invoked to convert them to a value.
                 - exclude:      The key name(s) to exclude from the output.
                                 String or Array of strings.
+      @returns a [Log] handle.
       ###
       logJson: (value, options = {}) ->
         args =
           value: value
           options: options
         ctrl = @appendCtrl 'c-json', @el(), args
-
         ctrl.onReady => @api.scrollToBottom()
+        ctrl
 
-        @ctrl
+
+
 
 
 

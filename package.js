@@ -11,6 +11,7 @@ Package.onUse(function (api) {
   api.use(['coffeescript', 'http']);
   api.use(['templating', 'ui', 'spacebars'], 'client');
   api.use(['respondly:css-stylus', 'respondly:ctrl', 'respondly:util']);
+  api.export('LogHandle');
 
   // Generated with: github.com/philcockfield/meteor-package-paths
   api.addFiles('client/json/json.html', 'client');
@@ -20,6 +21,7 @@ Package.onUse(function (api) {
   api.addFiles('client/json/json.styl', 'client');
   api.addFiles('client/log/log.coffee', 'client');
   api.addFiles('client/log/log.styl', 'client');
+  api.addFiles('client/log-handle.coffee', 'client');
 
 });
 
