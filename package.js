@@ -10,7 +10,10 @@ Package.describe({
 Package.onUse(function (api) {
   api.use(['coffeescript', 'http']);
   api.use(['templating', 'ui', 'spacebars'], 'client');
-  api.use(['respondly:css-stylus', 'respondly:ctrl', 'respondly:util']);
+  api.use('respondly:css-stylus');
+  api.use('respondly:ctrl');
+  api.use('respondly:util');
+  api.use('respondly:markdown');
   api.export('LogHandle');
 
   // Generated with: github.com/philcockfield/meteor-package-paths

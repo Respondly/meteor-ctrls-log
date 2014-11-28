@@ -1,7 +1,13 @@
 <template name='c-log-item'>
   <div class='c-log-item'>
-    {{#with api.title}}<h1>{{{ this }}}</h1>{{/with}}
-    {{#with api.subtitle}}<h2>{{{ this }}}</h2>{{/with}}
+    {{#if api.title}}
+      <h1>{{{ title }}}</h1>
+    {{/if}}
+
+    {{#if api.subtitle}}
+      <h2>{{{ subtitle }}}</h2>
+    {{/if}}
+
     {{> render ctrl=itemCtrl }}
   </div>
 </template>

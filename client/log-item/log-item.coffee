@@ -39,3 +39,6 @@ Ctrl.define
     helpers:
       itemCtrl: (value) -> @prop 'itemCtrl', value
 
+      title: -> PKG.toHtml(@api.title())
+      subtitle: -> PKG.toHtml(@api.subtitle())
+

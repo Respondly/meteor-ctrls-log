@@ -73,6 +73,19 @@ PKG.formatValue = (value, options = {}) ->
 
 
 
+###
+Formats the text of labels within the index tree.
+###
+PKG.toHtml = (text) ->
+  text = Util.asValue(text)
+  text = Markdown.toHtml(text)
+  text = text.replace /\n/g, '<br>'
+  text = '&nbsp;' if Util.isBlank(text)
+  text
+
+
+
+
 # PRIVATE ----------------------------------------------------------------------
 
 
