@@ -5,6 +5,9 @@ Ctrl.define
 
 
     api:
+      title: (value) -> @prop 'title', value
+
+
       write: (value, options) ->
         isValueType = ->
             return true if not value?

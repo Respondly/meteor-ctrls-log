@@ -2,7 +2,8 @@
 Provides a read/write handle to a log item.
 This allows a log item to be updated after it has been initially added.
 ###
-LogHandle = stampit().enclose ->
+Handle = stampit().enclose ->
+  hash = new ReactiveHash(onlyOnChange:true)
   ctrl = null
   initialState = null
 
@@ -19,11 +20,20 @@ LogHandle = stampit().enclose ->
     ctrl = itemCtrl
     ctrl.onDestroyed => @dispose()
 
+    # Keep the item in sync.
+    @autorun =>
+        ctrl.title(@title())
+
     # Finish up.
     if state = initialState
       @write(state.value, state.options)
       initialState = null
 
+
+  ###
+  Gets or sets the title on the item.
+  ###
+  @title = (value) -> hash.prop 'title', value
 
 
   ###
@@ -50,7 +60,9 @@ LogHandle = stampit().enclose ->
   Disposes of the log entry.
   ###
   @dispose = ->
+    @autorun.dispose
     ctrl?.dispose()
+    hash.dispose()
     @isDisposed = true
 
 
@@ -58,6 +70,14 @@ LogHandle = stampit().enclose ->
   return @
 
 
+
+
+
+
+LogHandle = stampit.compose(
+  Stamps.AutoRun,
+  Handle
+)
 
 
 
