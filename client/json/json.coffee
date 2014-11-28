@@ -65,17 +65,11 @@ Ctrl.define
 
 
           process = (key, value) =>
-            isExcluded = exclude.any (item) -> item is key
-            { value, css } = PKG.formatValue(value, isExcluded:isExcluded)
-
             if isFunction = Object.isFunction(value)
               return unless showFuncs
-              css += ' c-func'
-              if invokeFuncs
-                value = obj[key]()
-                value = formatValue(value)
-              else
-                value = funcToString(value)
+
+            isExcluded = exclude.any (item) -> item is key
+            { value, css } = PKG.formatValue(value, isExcluded:isExcluded)
 
             if isObject = Util.isObject(value)
               isCircular = circular.any (item) -> item.path is fullPath

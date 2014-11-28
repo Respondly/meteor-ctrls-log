@@ -1,5 +1,3 @@
-
-
 ###
 Provides a read/write handle to a log item.
 This allows a log item to be updated after it has been initially added.
@@ -14,7 +12,7 @@ LogHandle = stampit().enclose ->
 
   ###
   Initializes the handle.
-  @param itemCtrl: The item Ctrl that is being controlled.
+  @param itemCtrl: The { c-log-item } Ctrl that is being controlled.
   ###
   @init = (itemCtrl) ->
     throw new Error('Log item Ctrl not specified.') unless itemCtrl?
@@ -23,7 +21,7 @@ LogHandle = stampit().enclose ->
 
     # Finish up.
     if state = initialState
-      @value(state.value, state.options)
+      @write(state.value, state.options)
       initialState = null
 
 
@@ -33,10 +31,10 @@ LogHandle = stampit().enclose ->
   @param value    The value.
   @param options: Optional. The options for the value.
   ###
-  @value = (value, options) ->
+  @write = (value, options) ->
     return undefined if @isDisposed
     if ctrl?
-      ctrl.value(value)
+      ctrl.write(value, options)
     else
       # The handle has not been initialized with a Ctrl yet.
       # Store the initial state to load.

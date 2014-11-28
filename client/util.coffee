@@ -14,12 +14,13 @@ PKG.typeName = (value) ->
 Formats a value.
 @param value: The value to format.
 @param options:
-            isExcluded: Flag indcating if the value has been exluded from the set.
-                        Default:false
+              - invokeFuncs:  Flag indicating whether functions should be invoked to convert them to a value.
+              - isExcluded:   Flag indcating if the value has been exluded from the set.
 
 @returns { value(string) : css-class }
 ###
 PKG.formatValue = (value, options = {}) ->
+  invokeFuncs = options.invokeFuncs ? false
   isExcluded = options.isExcluded ? false
   css = ''
 
@@ -54,8 +55,28 @@ PKG.formatValue = (value, options = {}) ->
     css += ' c-excluded'
     value = "<#{ PKG.typeName(value) }>"
 
+  if Object.isFunction(value)
+    css += ' c-func'
+    if invokeFuncs
+      value = value()
+      if Object.isFunction(value)
+        value = funcToString(value)
+      else
+        value = PKG.formatValue(value) # <== RECURSION.
+    else
+      value = funcToString(value)
 
   # Finish up.
   result =
     value: value
     css: css
+
+
+
+# PRIVATE ----------------------------------------------------------------------
+
+
+
+funcToString = (fn) =>
+      params = Util.params(fn).join(', ')
+      "function (#{ params })"

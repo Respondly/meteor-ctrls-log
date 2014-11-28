@@ -25,42 +25,15 @@ Ctrl.define
       @param options
       @returns a [Log] handle.
       ###
-      log: (value, options  = {}) ->
-        increment = => @api.count(@api.count() + 1)
-
-        if Util.isObject(value) and not Object.isDate(value)
-          increment()
-          return @api.logJson(value, options)
-
-        # TODO
-        value = '<null>' if value is null
-        value = '<undefined>' if value is undefined
-        value = value?.toString()
-
-        console.log 'TODO | LOG TYPE', value
-
-
-
-      ###
-      Logs an object tree.
-      @param value: The object to load.
-      @param options:
-                - showFuncs:    Flag indicating whether function values are rendered.
-                - invokeFuncs:  Flag indicating whether functions should be invoked to convert them to a value.
-                - exclude:      The key name(s) to exclude from the output.
-                                String or Array of strings.
-      @returns a [Log] handle.
-      ###
-      logJson: (value, options = {}) ->
+      write: (value, options  = {}) ->
+        @api.count(@api.count() + 1)
         args =
-          value: value
-          options: options
-        ctrl = @appendCtrl 'c-json', @el(), args
+          data:
+            value: value
+            options: options
+        ctrl = @appendCtrl('c-log-item', @el(), args)
         ctrl.onReady => @api.scrollToBottom()
         ctrl
-
-
-
 
 
 

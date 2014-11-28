@@ -2,7 +2,7 @@
   <ul class='c-json unstyled'>
     {{#each props}}
       <li>
-        <span class='c-key'>{{ key }}</span>:
+        <span class='c-log-key'>{{ key }}</span>:
         {{#if isObject}}
           {{> ctrl type='c-json'
                 value=value
@@ -12,7 +12,7 @@
                 exclude=exclude
           }}
         {{else}}
-          <span class='c-value {{ valueCss }}'>{{ value }}</span>
+          <span class='c-log-value {{ valueCss }}'>{{ value }}</span>
         {{/if}}
       </li>
     {{/each}}
