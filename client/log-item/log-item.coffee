@@ -24,7 +24,7 @@ Ctrl.define
 
         getType = ->
             return 'c-log-value' if isValueType()
-            return 'c-json' if Object.isObject(value)
+            return 'c-json' if Util.isObject(value)
 
         if type = getType()
           data = Object.clone(options ? {})
