@@ -23,6 +23,7 @@ Handle = stampit().enclose ->
     # Keep the item in sync.
     @autorun =>
         ctrl.title(@title())
+        ctrl.subtitle(@subtitle())
 
     # Finish up.
     if state = initialState
@@ -34,6 +35,11 @@ Handle = stampit().enclose ->
   Gets or sets the title on the item.
   ###
   @title = (value) -> hash.prop 'title', value
+
+  ###
+  Gets or sets the sub-title on the item.
+  ###
+  @subtitle = (value) -> hash.prop 'subtitle', value
 
 
   ###

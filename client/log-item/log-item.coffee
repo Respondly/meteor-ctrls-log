@@ -6,6 +6,8 @@ Ctrl.define
 
     api:
       title: (value) -> @prop 'title', value
+      subtitle: (value) -> @prop 'subtitle', value
+
 
 
       write: (value, options) ->
