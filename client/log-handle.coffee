@@ -23,16 +23,27 @@ LogHandle = stampit().enclose ->
   Gets or sets the title on the item.
   ###
   @title = (value) ->
-    ctrl?.title(value)
-    return @ if value isnt undefined # Allow method chaining.
+    result = ctrl?.title(value)
+    return if value is undefined then result else @  # Allow method chaining.
 
 
   ###
   Gets or sets the sub-title on the item.
   ###
   @subtitle = (value) ->
-    ctrl?.subtitle(value)
-    return @ if value isnt undefined # Allow method chaining.
+    result = ctrl?.subtitle(value)
+    return if value is undefined then result else @  # Allow method chaining.
+
+
+  ###
+  Gets or sets the value (pass through to the [write] method).
+  ###
+  @value = (value, options) ->
+    if value isnt undefined
+      @write(value, options)
+      @ # Allow method chaining.
+    else
+      ctrl?.value() # READ.
 
 
   ###

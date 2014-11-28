@@ -7,10 +7,12 @@ Ctrl.define
     api:
       title: (value) -> @prop 'title', value
       subtitle: (value) -> @prop 'subtitle', value
-
+      value: (value) -> @prop 'value', value
 
 
       write: (value, options) ->
+        @api.value(value)
+
         isValueType = ->
             return true if not value?
             return true if Object.isString(value)
@@ -31,13 +33,13 @@ Ctrl.define
             type: type
             data: data
 
-        @helpers.itemCtrl(null)
-        Deps.afterFlush => @helpers.itemCtrl(def ? null)
+        @helpers.valueCtrl(null) # Force a new value ctrl.
+        Deps.afterFlush => @helpers.valueCtrl(def ? null)
 
 
 
     helpers:
-      itemCtrl: (value) -> @prop 'itemCtrl', value
+      valueCtrl: (value) -> @prop 'valueCtrl', value
 
       title: -> PKG.toHtml(@api.title())
       subtitle: -> PKG.toHtml(@api.subtitle())
