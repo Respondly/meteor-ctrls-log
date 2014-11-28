@@ -1,7 +1,7 @@
 Package.describe({
   name: 'respondly:ctrls-log',
   summary: 'UI controls for visually logging system state.',
-  version: '0.0.1',
+  version: '1.0.0',
   git: 'https://github.com/Respondly/meteor-ctrls-log.git'
 });
 
@@ -11,10 +11,9 @@ Package.onUse(function (api) {
   api.versionsFrom('1.0');
   api.use(['coffeescript', 'http']);
   api.use(['templating', 'ui', 'spacebars'], 'client');
-  api.use('respondly:css-stylus');
-  api.use('respondly:ctrl');
-  api.use('respondly:util');
-  api.use('respondly:markdown');
+  api.use('respondly:css-stylus@1.0.0');
+  api.use('respondly:ctrl@1.0.0');
+  api.use('respondly:markdown@1.0.0');
   api.export('LogHandle');
 
   // Generated with: github.com/philcockfield/meteor-package-paths
