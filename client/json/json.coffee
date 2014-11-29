@@ -67,33 +67,35 @@ Ctrl.define
                 params = Util.params(fn).join(', ')
                 "function (#{ params })"
 
-
           process = (key, value) =>
-            if isFunction = Object.isFunction(value)
-              return unless showFuncs
+                if isFunction = Object.isFunction(value)
+                  return unless showFuncs
+                  if invokeFuncs
+                    value = value()
 
-            isExcluded = exclude.any (item) -> item is key
-            { value, css } = PKG.formatValue(value, isExcluded:isExcluded)
 
-            if isObject = Util.isObject(value)
-              isCircular = circular.any (item) -> item.path is fullPath
-              if isCircular
-                css += ' c-circular'
-                value = '<circular>'
-                isObject = false
-              else
-                if Object.isEmpty(value)
-                  isObject = false # Prevent the string representation being rendered with a child instance.
-                  value = '{}'
+                isExcluded = exclude.any (item) -> item is key
+                { value, css } = PKG.formatValue(value, isExcluded:isExcluded)
 
-            result.push
-              key:            key
-              value:          value
-              valueCss:       css
-              isObject:       isObject
-              showFuncs:      showFuncs
-              invokeFuncs:    invokeFuncs
-              exclude:        exclude
+                if isObject = Util.isObject(value)
+                  isCircular = circular.any (item) -> item.path is fullPath
+                  if isCircular
+                    css += ' c-circular'
+                    value = '<circular>'
+                    isObject = false
+                  else
+                    if Object.isEmpty(value)
+                      isObject = false # Prevent the string representation being rendered with a child instance.
+                      value = '{}'
+
+                result.push
+                  key:            key
+                  value:          value
+                  valueCss:       css
+                  isObject:       isObject
+                  showFuncs:      showFuncs
+                  invokeFuncs:    invokeFuncs
+                  exclude:        exclude
 
           process(key, value) for key, value of obj
           result
