@@ -26,6 +26,7 @@ Ctrl.define
             false
 
         getType = ->
+            return if value is undefined and options.showUndefined is false
             return 'c-log-value' if isValueType()
             return 'c-json' if Util.isObject(value)
 
