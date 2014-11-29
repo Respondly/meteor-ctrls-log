@@ -1,3 +1,6 @@
+###
+A single syntax-highlighted value.
+###
 Ctrl.define
   'c-log-value':
     helpers:

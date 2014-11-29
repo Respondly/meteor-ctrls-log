@@ -4,6 +4,7 @@ This allows a log item to be updated after it has been initially added.
 ###
 LogHandle = stampit().enclose ->
   ctrl = null
+  isInitialized = false
 
 
   # ----------------------------------------------------------------------
@@ -14,9 +15,22 @@ LogHandle = stampit().enclose ->
   @param itemCtrl: The { c-log-item } Ctrl that is being controlled.
   ###
   @init = (itemCtrl) ->
+    return if isInitialized
     throw new Error('Log item Ctrl not specified.') unless itemCtrl?
     ctrl = itemCtrl
     ctrl.onDestroyed => @dispose()
+    isInitialized = true
+
+
+  ###
+  Disposes of the log entry.
+  ###
+  @dispose = ->
+    ctrl?.dispose()
+    @isDisposed = true
+
+
+  # ----------------------------------------------------------------------
 
 
   ###
@@ -54,16 +68,6 @@ LogHandle = stampit().enclose ->
   @write = (value, options) ->
     ctrl?.write(value, options)
     @
-
-
-
-
-  ###
-  Disposes of the log entry.
-  ###
-  @dispose = ->
-    ctrl?.dispose()
-    @isDisposed = true
 
 
   # ----------------------------------------------------------------------

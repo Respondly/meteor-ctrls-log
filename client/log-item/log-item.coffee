@@ -1,3 +1,6 @@
+###
+A single row in the log.
+###
 Ctrl.define
   'c-log-item':
     init: ->

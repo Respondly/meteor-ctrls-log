@@ -39,6 +39,10 @@ Ctrl.define
 
 
     helpers:
+      cssClass: ->
+        isRoot = @defaultValue('isRoot', true)
+        'c-root' if isRoot
+
       fullPath: ->
         result = ''
         walk = (level) ->
