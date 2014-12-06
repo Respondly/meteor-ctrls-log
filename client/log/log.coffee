@@ -11,11 +11,13 @@ Ctrl.define
       Clears the log.
       ###
       clear: ->
-        for child in Object.clone(@children)
-          child.dispose()
-
+        child.dispose() for child in Object.clone(@children)
         @api.count(0)
 
+
+      value: (value, options) ->
+        @api.write(value, options) if value isnt undefined
+        value
 
 
       ###

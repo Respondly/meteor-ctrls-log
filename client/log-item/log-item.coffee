@@ -13,8 +13,11 @@ Ctrl.define
       value: (value) -> @prop 'value', value
 
 
-      write: (value, options) ->
-        @api.value(value)
+      write: (value, options = {}) ->
+        if value is undefined and options.showUndefined
+          @hash().unset('value')
+        else
+          @api.value(value)
 
         isValueType = ->
             return true if not value?
@@ -38,13 +41,13 @@ Ctrl.define
             data: data
 
         @helpers.valueCtrl(null) # Force a new value ctrl.
-        Deps.afterFlush => @helpers.valueCtrl(def ? null)
+        Tracker.afterFlush =>
+            @helpers.valueCtrl(def ? null)
 
 
 
     helpers:
       valueCtrl: (value) -> @prop 'valueCtrl', value
-
       title: -> PKG.toHtml(@api.title())
       subtitle: -> PKG.toHtml(@api.subtitle())
 

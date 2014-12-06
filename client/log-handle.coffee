@@ -4,8 +4,30 @@ This allows a log item to be updated after it has been initially added.
 ###
 LogHandle = stampit().enclose ->
   ctrl = null
-  initState = {}
-  isInitialized = false
+  queue = []
+
+
+  processChange = (args) =>
+    ctrl[args.method](args.value, args.options)
+
+
+  queueChange = (method, value, options = {}) =>
+    args = { method:method, value:value, options:options }
+
+    isWrite = value isnt undefined
+    isWrite = true if value is undefined and options.showUndefined is true
+
+    if isWrite
+      if ctrl?
+        # Is initialized, process the change immediately.
+        processChange(args)
+      else
+        # Not initializes yet, queue up the operation.
+        queue.push(args)
+
+    # Finish up.
+    return @ if value isnt undefined # WRITE: Allow method chaining.
+    return value # READ.
 
 
   # ----------------------------------------------------------------------
@@ -17,7 +39,7 @@ LogHandle = stampit().enclose ->
   ###
   @init = (itemCtrl) ->
     # Setup initial conditions.
-    return if isInitialized
+    return if ctrl?
     throw new Error('Log item Ctrl not specified.') unless itemCtrl?
 
     # Manage Ctrl.
@@ -25,12 +47,7 @@ LogHandle = stampit().enclose ->
     ctrl.onDestroyed => @dispose()
 
     # Set initial state.
-    @title(initState.title) if initState.title isnt undefined
-    @subtitle(initState.subtitle) if initState.subtitle isnt undefined
-    @write(initState.value, initState.options) if initState.value isnt undefined
-
-    # Finish up.
-    isInitialized = true
+    processChange(item) for item in queue
 
 
   ###
@@ -39,6 +56,7 @@ LogHandle = stampit().enclose ->
   @dispose = ->
     ctrl?.dispose()
     @isDisposed = true
+    queue = []
 
 
   # ----------------------------------------------------------------------
@@ -47,44 +65,29 @@ LogHandle = stampit().enclose ->
   ###
   Gets or sets the title on the item.
   ###
-  @title = (value) ->
-    initState.title = value if value isnt undefined and not ctrl?
-    result = ctrl?.title(value)
-    return if value is undefined then result else @  # Allow method chaining.
+  @title = (value) -> queueChange 'title', value
 
 
   ###
   Gets or sets the sub-title on the item.
   ###
-  @subtitle = (value) ->
-    initState.subtitle = value if value isnt undefined and not ctrl?
-    result = ctrl?.subtitle(value)
-    return if value is undefined then result else @  # Allow method chaining.
+  @subtitle = (value) -> queueChange 'subtitle', value
 
 
   ###
   Gets or sets the value (pass through to the [write] method).
   ###
-  @value = (value, options) ->
-    if value isnt undefined
-      @write(value, options)
-      @ # Allow method chaining.
-    else
-      ctrl?.value() # READ.
-
+  @value = (value, options) -> queueChange 'write', value, options
 
   ###
   Sets the log value.
   @param value    The value.
   @param options: Optional. The options for the value.
   ###
-  @write = (value, options) ->
-    if value isnt undefined and not ctrl?
-      initState.value = value
-      initState.options = value
-
-    ctrl?.write(value, options)
-    @
+  @write = (value, options = {}) ->
+    options.showUndefined = true
+    queueChange 'write', value, options
+    @ # Write always returns the handle.
 
 
   # ----------------------------------------------------------------------
