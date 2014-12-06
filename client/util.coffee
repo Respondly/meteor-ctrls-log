@@ -1,9 +1,10 @@
 PKG.typeName = (value) ->
-  return 'string'  if Object.isString(value)
-  return 'number'  if Object.isNumber(value)
-  return 'boolean' if Object.isBoolean(value)
-  return 'date'    if Object.isDate(value)
-  return 'object'  if Util.isObject(value)
+  return 'string'   if Object.isString(value)
+  return 'number'   if Object.isNumber(value)
+  return 'boolean'  if Object.isBoolean(value)
+  return 'date'     if Object.isDate(value)
+  return 'function' if Object.isFunction(value)
+  return 'object'   if Util.isObject(value)
   'unknown-type'
 
 
