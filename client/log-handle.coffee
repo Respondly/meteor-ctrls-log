@@ -5,6 +5,7 @@ This allows a log item to be updated after it has been initially added.
 LogHandle = stampit().enclose ->
   ctrl = null
   queue = []
+  @uid = _.uniqueId('uid')
 
 
   processChange = (args) =>
