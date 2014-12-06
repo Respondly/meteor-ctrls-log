@@ -73,9 +73,9 @@ Ctrl.define
                   if invokeFuncs
                     value = value()
 
-
                 isExcluded = exclude.any (item) -> item is key
-                { value, css } = PKG.formatValue(value, isExcluded:isExcluded)
+                return if isExcluded
+                { value, css } = PKG.formatValue(value)
 
                 if isObject = Util.isObject(value)
                   isCircular = circular.any (item) -> item.path is fullPath
