@@ -9,7 +9,14 @@ LogHandle = stampit().enclose ->
 
 
   processChange = (args) =>
-    ctrl[args.method](args.value, args.options)
+    value = args.value
+    if @isDisposed
+      msg = "Harness Error: Trying to log to disposed log-handle"
+      console.error msg
+      console.error 'Value:', value
+      console.error ''
+    else
+      ctrl[args.method](value, args.options)
 
 
   queueChange = (method, value, options = {}) =>
