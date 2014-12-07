@@ -68,13 +68,14 @@ Ctrl.define
                 "function (#{ params })"
 
           process = (key, value) =>
+                isExcluded = exclude.any (item) -> item is key
+                return if isExcluded
+
                 if isFunction = Object.isFunction(value)
                   return unless showFuncs
                   if invokeFuncs
-                    value = value()
+                    Deps.nonreactive -> value = obj[key]()
 
-                isExcluded = exclude.any (item) -> item is key
-                return if isExcluded
                 { value, css } = PKG.formatValue(value)
 
                 if isObject = Util.isObject(value)
