@@ -1,0 +1,13 @@
+<template name='c-log-item'>
+  <div class='c-log-item'>
+    {{#if api.title}}
+      <h1>{{{ title }}}</h1>
+    {{/if}}
+
+    {{#if api.subtitle}}
+      <h2>{{{ subtitle }}}</h2>
+    {{/if}}
+
+    {{> render ctrl=valueCtrl }}
+  </div>
+</template>

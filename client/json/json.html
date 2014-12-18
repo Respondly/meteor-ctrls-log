@@ -1,8 +1,8 @@
 <template name='c-json'>
-  <ul class='c-json unstyled'>
+  <ul class='c-json unstyled {{ cssClass }}'>
     {{#each props}}
       <li>
-        <span class='c-key'>{{ key }}</span>:
+        <span class='c-log-key'>{{ key }}</span>:
         {{#if isObject}}
           {{> ctrl type='c-json'
                 value=value
@@ -10,9 +10,10 @@
                 showFuncs=showFuncs
                 invokeFuncs=invokeFuncs
                 exclude=exclude
+                isRoot=false
           }}
         {{else}}
-          <span class='c-value {{ valueCss }}'>{{ value }}</span>
+          <span class='c-log-value {{ valueCss }}'>{{ value }}</span>
         {{/if}}
       </li>
     {{/each}}

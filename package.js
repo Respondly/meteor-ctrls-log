@@ -1,32 +1,40 @@
 Package.describe({
-  summary: 'UI controls for visually logging system state.'
+  name: 'respondly:ctrls-log',
+  summary: 'UI controls for visually logging system state.',
+  version: '1.0.2',
+  git: 'https://github.com/Respondly/meteor-ctrls-log.git'
 });
 
 
 
-Package.on_use(function (api) {
+Package.onUse(function (api) {
+  // api.versionsFrom('1.0');
   api.use(['coffeescript', 'http']);
-  api.use(['templating'], 'client');
-  api.use(['css-stylus', 'ctrl', 'util']);
+  api.use(['templating', 'ui', 'spacebars'], 'client');
+  api.use('respondly:css-stylus@1.0.3');
+  api.use('respondly:ctrl@1.0.1');
+  api.use('respondly:util@1.0.1');
+  api.use('respondly:markdown@1.0.0');
+  api.export('LogHandle');
 
   // Generated with: github.com/philcockfield/meteor-package-paths
-  api.add_files('client/json/json.html', 'client');
-  api.add_files('client/log/log.html', 'client');
-  api.add_files('client/ns.js', 'client');
-  api.add_files('client/json/json.coffee', 'client');
-  api.add_files('client/json/json.styl', 'client');
-  api.add_files('client/log/log.coffee', 'client');
-  api.add_files('client/log/log.styl', 'client');
+  api.addFiles('client/json/json.html', 'client');
+  api.addFiles('client/log/log.html', 'client');
+  api.addFiles('client/log-item/log-item.html', 'client');
+  api.addFiles('client/log-value/log-value.html', 'client');
+  api.addFiles('client/ns.js', 'client');
+  api.addFiles('client/json/json.coffee', 'client');
+  api.addFiles('client/json/json.styl', 'client');
+  api.addFiles('client/log/log.coffee', 'client');
+  api.addFiles('client/log/log.styl', 'client');
+  api.addFiles('client/log-item/log-item.coffee', 'client');
+  api.addFiles('client/log-item/log-item.styl', 'client');
+  api.addFiles('client/log-value/log-value.coffee', 'client');
+  api.addFiles('client/log-value/log-value.styl', 'client');
+  api.addFiles('client/css.styl', 'client');
+  api.addFiles('client/log-handle.coffee', 'client');
+  api.addFiles('client/util.coffee', 'client');
 
 });
 
 
-
-Package.on_test(function (api) {
-  api.use(['munit', 'coffeescript', 'chai']);
-  api.use('ctrls-log');
-
-  // Generated with: github.com/philcockfield/meteor-package-paths
-  api.add_files('tests/shared/_init.coffee', ['client', 'server']);
-
-});

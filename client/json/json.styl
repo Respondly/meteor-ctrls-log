@@ -2,12 +2,6 @@
 
 
 .c-json
-  BLUE     = #1900D3
-  DARK_RED = #C61604
-  PURPLE   = #890193
-
-  font-family Monaco, Menlo, Consolas, "Courier New", monospace
-  font-size 12px
   box-sizing border-box
   li
     padding-bottom 4px
@@ -15,19 +9,7 @@
       margin-left 20px
       margin-top 5px
 
-  .c-key
-    color PURPLE
-
-  .c-value
-    color darken(white, 75%)
-
-    &.c-string
-      color DARK_RED
-
-    &.c-number, &.c-bool, &.c-date
-      color BLUE
-
-    &.c-null, &.c-undefined, &.c-excluded, &.c-circular
-      color darken(white, 30%)
+  &.c-root > li:last-child
+    padding-bottom 0
 
 

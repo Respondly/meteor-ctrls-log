@@ -1,0 +1,35 @@
+@import 'core.import'
+
+BLUE     = #1900D3
+DARK_RED = #C61604
+PURPLE   = #890193
+
+FONT_FAMILY = Monaco, Menlo, Consolas, "Courier New", monospace
+
+
+
+
+.c-log-key
+  color PURPLE
+  font-size 12px
+  font-family FONT_FAMILY
+
+
+// ------------------------------------------------------
+
+
+.c-log-value
+  color darken(white, 75%)
+  font-size 12px
+  font-family FONT_FAMILY
+
+  &.c-string
+    color DARK_RED
+
+  &.c-number, &.c-bool, &.c-date
+    color BLUE
+
+  &.c-null, &.c-undefined, &.c-excluded, &.c-circular
+    color darken(white, 30%)
+
+

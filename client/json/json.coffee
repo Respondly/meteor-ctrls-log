@@ -39,6 +39,10 @@ Ctrl.define
 
 
     helpers:
+      cssClass: ->
+        isRoot = @defaultValue('isRoot', true)
+        'c-root' if isRoot
+
       fullPath: ->
         result = ''
         walk = (level) ->
@@ -63,85 +67,36 @@ Ctrl.define
                 params = Util.params(fn).join(', ')
                 "function (#{ params })"
 
-
-          typeName = (value) ->
-            return 'string'  if Object.isString(value)
-            return 'number'  if Object.isNumber(value)
-            return 'boolean' if Object.isBoolean(value)
-            return 'date'    if Object.isDate(value)
-            return 'object'  if Util.isObject(value)
-            'unknown-type'
-
-
           process = (key, value) =>
-            isExcluded = exclude.any (item) -> item is key
-            valueCss = ''
+                isExcluded = exclude.any (item) -> item is key
+                return if isExcluded
 
-            formatValue = (value) ->
-                  if isString = Object.isString(value)
-                    valueCss += ' c-string'
-                    value = "\"#{ value }\""
+                if isFunction = Object.isFunction(value)
+                  return unless showFuncs
+                  if invokeFuncs
+                    Deps.nonreactive -> value = obj[key]()
 
-                  if isBoolean = Object.isBoolean(value)
-                    valueCss += ' c-bool'
-                    value = value.toString()
+                { value, css } = PKG.formatValue(value)
 
-                  if isArray = Object.isArray(value)
-                    valueCss += ' c-array'
-                    value = "Array[#{ value.length }]"
+                if isObject = Util.isObject(value)
+                  isCircular = circular.any (item) -> item.path is fullPath
+                  if isCircular
+                    css += ' c-circular'
+                    value = '<circular>'
+                    isObject = false
+                  else
+                    if Object.isEmpty(value)
+                      isObject = false # Prevent the string representation being rendered with a child instance.
+                      value = '{}'
 
-                  if isNumber = Object.isNumber(value)
-                    valueCss += ' c-number'
-
-                  if isDate = Object.isDate(value)
-                    valueCss += ' c-date'
-                    value = "<#{ value.toString() }>"
-
-                  if isNull = value is null
-                    valueCss += ' c-null'
-                    value = "null"
-
-                  if isUndefined = value is undefined
-                    valueCss += ' c-undefined'
-                    value = "undefined"
-
-                  if isExcluded and value?
-                    valueCss += ' c-excluded'
-                    value = "<#{ typeName(value) }>"
-
-                  value
-
-            value = formatValue(value)
-
-            if isFunction = Object.isFunction(value)
-              return unless showFuncs
-              valueCss += ' c-func'
-              if invokeFuncs
-                value = obj[key]()
-                value = formatValue(value)
-              else
-                value = funcToString(value)
-
-
-            if isObject = Util.isObject(value)
-              isCircular = circular.any (item) -> item.path is fullPath
-              if isCircular
-                valueCss += ' c-circular'
-                value = '<circular>'
-                isObject = false
-              else
-                if Object.isEmpty(value)
-                  isObject = false # Prevent the string representation being rendered with a child instance.
-                  value = '{}'
-
-            result.push
-              key:            key
-              value:          value
-              valueCss:       valueCss
-              isObject:       isObject
-              showFuncs:      showFuncs
-              invokeFuncs:    invokeFuncs
-              exclude:        exclude
+                result.push
+                  key:            key
+                  value:          value
+                  valueCss:       css
+                  isObject:       isObject
+                  showFuncs:      showFuncs
+                  invokeFuncs:    invokeFuncs
+                  exclude:        exclude
 
           process(key, value) for key, value of obj
           result
