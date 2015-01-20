@@ -1,6 +1,7 @@
 # UI Logging
 UI controls for visually logging system state.
 
+[![Circle CI](https://circleci.com/gh/Respondly/meteor-ctrls-log.svg?style=svg)](https://circleci.com/gh/Respondly/meteor-ctrls-log)
 
 ## Installation
 When running for the first time:
