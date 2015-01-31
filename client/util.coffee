@@ -24,6 +24,7 @@ PKG.formatValue = (value, options = {}) ->
   invokeFuncs = options.invokeFuncs ? false
   isExcluded = options.isExcluded ? false
   css = ''
+  tooltip = null
 
   if isString = Object.isString(value)
     css += ' c-string'
@@ -42,7 +43,9 @@ PKG.formatValue = (value, options = {}) ->
 
   if isDate = Object.isDate(value)
     css += ' c-date'
-    value = "<#{ value.toString() }>"
+    tooltip = value.toString()
+    formatted = value.format('{d}-{Mon}-{yyyy},{h}:{m}{tt}')
+    value = "<#{ formatted }>"
 
   if isNull = value is null
     css += ' c-null'
@@ -71,6 +74,7 @@ PKG.formatValue = (value, options = {}) ->
   result =
     value: value
     css: css
+    tooltip: tooltip
 
 
 
