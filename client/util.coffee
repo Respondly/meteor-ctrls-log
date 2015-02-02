@@ -44,7 +44,7 @@ PKG.formatValue = (value, options = {}) ->
   if isDate = Object.isDate(value)
     css += ' c-date'
     tooltip = value.toString()
-    formatted = value.format('{d}-{Mon}-{yyyy},{h}:{m}{tt}')
+    formatted = value.format('{d}-{Mon}-{yyyy},{h}:{mm}{tt}')
     value = "<#{ formatted }>"
 
   if isNull = value is null
