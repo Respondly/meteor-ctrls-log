@@ -76,7 +76,7 @@ Ctrl.define
                   if invokeFuncs
                     Deps.nonreactive -> value = obj[key]()
 
-                { value, css } = PKG.formatValue(value)
+                { value, css, tooltip } = PKG.formatValue(value)
 
                 if isObject = Util.isObject(value)
                   isCircular = circular.any (item) -> item.path is fullPath
@@ -93,6 +93,7 @@ Ctrl.define
                   key:            key
                   value:          value
                   valueCss:       css
+                  tooltip:        tooltip
                   isObject:       isObject
                   showFuncs:      showFuncs
                   invokeFuncs:    invokeFuncs

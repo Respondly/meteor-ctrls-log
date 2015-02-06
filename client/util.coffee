@@ -36,6 +36,7 @@ PKG.formatValue = (value, options = {}) ->
 
   if isArray = Object.isArray(value)
     css += ' c-array'
+    tooltip = "[#{ value.toString() }]"
     value = "Array[#{ value.length }]"
 
   if isNumber = Object.isNumber(value)
