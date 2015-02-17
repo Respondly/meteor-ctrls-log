@@ -37,7 +37,22 @@ PKG.formatValue = (value, options = {}) ->
   if isArray = Object.isArray(value)
     css += ' c-array'
     tooltip = "[#{ value.toString() }]"
-    value = "Array[#{ value.length }]"
+    # value = "Array[#{ value.length }]"
+    if value.length is 0
+      value = "<empty-array>"
+    else
+      array = {}
+      MAX = 3
+      for item, i in value
+        break if i >= MAX
+        array[i] = item
+
+      if value.length > MAX
+        array['-'] = "<...#{ value.length } items>"
+        # array[value.length - 1] = value.last()
+
+      value = array
+
 
   if isNumber = Object.isNumber(value)
     css += ' c-number'

@@ -31,7 +31,7 @@ Ctrl.define
         getType = ->
             return if value is undefined and options.showUndefined is false
             return 'c-log-value' if isValueType()
-            return 'c-json' if Util.isObject(value)
+            return 'c-json' if Util.isObject(value) or Object.isArray(value)
 
         if type = getType()
           data = Object.clone(options ? {})
